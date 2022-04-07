@@ -1,11 +1,14 @@
 import math
 
 class Vector:
-  def __init__(self, x, y):
+  x: int | float = 0
+  y: int | float = 0
+
+  def __init__(self, x: int | float, y: int | float):
     self.x, self.y = x, y
 
   def __str__(self):
-    return '{:g}i + {:g}j'.format(self.x, self.y)
+    return '{:g}x + {:g}y'.format(self.x, self.y)
 
   def __repr__(self):
     return repr((self.x, self.y))

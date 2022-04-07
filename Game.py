@@ -2,7 +2,9 @@ import pygame
 from objects.Scene import Scene
 
 class Game:
-  tick = 60
+  tick: int = 60
+  scenes: list[Scene] = []
+  current_scene: Scene = None
 
   def __init__(self, name: str, width: int, height: int):
     pygame.display.set_caption(name)
@@ -10,9 +12,6 @@ class Game:
     
     self.screen_width = width
     self.screen_height = height
-
-    self.scenes = []
-    self.current_scene = None
 
   def set_tick(self, tick):
     self.tick = tick
@@ -26,10 +25,13 @@ class Game:
   def update(self, delta):
     if self.current_scene == None:
       self.current_scene = self.scenes[0]
+
+    if not self.current_scene.inited:
+      self.current_scene.init()
       
     self.current_scene.update(delta)
 
   def draw(self):
     self.context.fill((0, 0, 0))
-    # self.current_scene.draw()
+    self.current_scene.draw()
     

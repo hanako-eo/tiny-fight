@@ -1,5 +1,6 @@
 import pygame
 from Game import Game
+from scenes.PlateScene import PlateScene
 
 pygame.init()
 
@@ -8,14 +9,18 @@ game = Game(
   800, 
   600
 )
-# game.add_scene()
+
+game.add_scene(
+  PlateScene(game, "PlateScene")
+)
+
 game.set_tick(60)
 
 clock = pygame.time.Clock()
 running = True
 while running:
   delta = clock.tick(game.get_tick()) / 1000
-  # game.update(delta)
+  game.update(delta)
   game.draw()
 
   pygame.display.update()

@@ -6,6 +6,7 @@ class Game:
   tick: int = 60
   scenes: list[Scene] = []
   current_scene: Scene = None
+  overlays: list[Scene] = []
 
   def __init__(self, name: str, width: int, height: int, image: str = None):
     pygame.display.set_caption(name)
@@ -21,34 +22,57 @@ class Game:
   def set_tick(self, tick):
     self.tick = tick
 
-  def get_tick(self):
+  def get_tick(self) -> int:
     return self.tick
 
   def add_scene(self, scene: Scene):
     self.scenes.append(scene)
 
-  def update(self, delta):
+  def add_overlay(self, overlay_name: str):
+    for scene in self.scenes:
+      if scene.name == overlay_name:
+        self.overlays.append(scene)
+        return
+
+  def remove_overlay(self, overlay_name: str):
+    for overlay in self.overlays:
+      if overlay.name == overlay_name:
+        self.overlays.remove(overlay)
+
+  def update(self, delta: float):
     if self.current_scene == None:
       self.current_scene = self.scenes[0]
 
-    if not self.current_scene.inited:
-      self.current_scene.init()
-      self.current_scene.inited = True
+    self.mouse.update()
 
-    for entity in self.current_scene.entities:
+    self.__update__(delta, self.current_scene)
+    for overlay in self.overlays:
+      self.__update__(delta, overlay)
+  
+  def __update__(self, delta: float, scene: Scene):
+    if not scene.inited:
+      scene.init()
+      scene.inited = True
+
+    for entity in scene.entities:
       if not entity.inited:
         entity.init()
         entity.inited = True
       
-    self.mouse.update()
-    self.current_scene.update(delta)
+    scene.update(delta)
 
-    for entity in self.current_scene.entities:
+    for entity in scene.entities:
       entity.update(delta)
 
   def draw(self):
     self.context.fill((0, 0, 0))
-    self.current_scene.draw()
-    for entity in self.current_scene.entities:
+    self.__draw__(self.current_scene)
+    for overlay in self.overlays:
+      self.__draw__(overlay)
+
+  def __draw__(self, scene: Scene):
+    scene.draw()
+    for entity in scene.entities:
       entity.draw()
+
     

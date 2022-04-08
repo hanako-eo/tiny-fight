@@ -1,9 +1,7 @@
 from entities.Cell import Cell
 from objects.Scene import Scene
 
-EMPTY = 0
-
-class PlateScene(Scene):
+class OverlayScene(Scene):
   plate: list[list[int]] = []
   cell_size: tuple[int, int] = (60, 60)
 
@@ -20,7 +18,15 @@ class PlateScene(Scene):
     ]
     self.plate = [
       [
-        EMPTY for y in range(5)
+        Cell(
+          self,
+          x * self.cell_size[0] + 100,
+          y * self.cell_size[1] + 100,
+          x, y,
+          self.cell_size[0],
+          self.cell_size[1],
+          x < 2 or x > 7
+        ) for y in range(5)
       ] for x in range(10)
     ]
 

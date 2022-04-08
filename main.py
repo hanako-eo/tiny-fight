@@ -1,6 +1,7 @@
 import pygame
 from Game import Game
 from scenes.PlateScene import PlateScene
+from scenes.OverlayScene import OverlayScene
 
 pygame.init()
 
@@ -14,7 +15,11 @@ game = Game(
 game.add_scene(
   PlateScene(game, "PlateScene")
 )
+game.add_scene(
+  OverlayScene(game, "OverlayScene")
+)
 
+game.add_overlay("OverlayScene")
 game.set_tick(60)
 
 clock = pygame.time.Clock()

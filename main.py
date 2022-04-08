@@ -7,7 +7,8 @@ pygame.init()
 game = Game(
   "AutoWar", 
   800, 
-  600
+  600,
+  image="./assets/icon.png"
 )
 
 game.add_scene(

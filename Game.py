@@ -6,8 +6,10 @@ class Game:
   scenes: list[Scene] = []
   current_scene: Scene = None
 
-  def __init__(self, name: str, width: int, height: int):
+  def __init__(self, name: str, width: int, height: int, image: str = None):
     pygame.display.set_caption(name)
+    if image != None:
+      pygame.display.set_icon(pygame.image.load(image))
     self.context = pygame.display.set_mode((width, height))
     
     self.screen_width = width

@@ -1,20 +1,28 @@
-import pygame
+from entities.Cell import Cell
 from objects.Scene import Scene
 
 EMPTY = 0
 
 class PlateScene(Scene):
   plate: list[list[int]] = []
+  cell_size: tuple[int, int] = (60, 60)
 
   def init(self):
-    super().init()
     self.plate = [
-      [EMPTY for _ in range(8)] for _ in range(5)
+      [
+        Cell(
+          self,
+          x * self.cell_size[0] + 100,
+          y * self.cell_size[1] + 150,
+          x, y,
+          self.cell_size[0],
+          self.cell_size[1]
+        ) for y in range(5)
+      ] for x in range(10)
     ]
 
-  def draw(self):
-    pygame.draw.rect(
-      self.game.context,
-      (255, 0, 0),
-      pygame.Rect(10, 10, 20, 20)
-    )
+  # def draw(self):
+  #   pass
+    # for x in range(len(self.plate)):
+    #   for y in range(len(self.plate[x])):
+        

@@ -1,7 +1,7 @@
-# AutoWar
+# Tiny Fight
 
 ## Concept:
-AutoWar est un jeu de stratégie en duel.
+Tiny Fight est un jeu de stratégie en duel.
 2 joueurs ont 3 minutes pour placer des unités sur un 
 plateau similaire à un jeu d'échec.
 

@@ -5,7 +5,7 @@ from scenes.PlateScene import PlateScene
 pygame.init()
 
 game = Game(
-  "AutoWar", 
+  "Tiny Fight", 
   800, 
   600,
   image="./assets/icon.png"

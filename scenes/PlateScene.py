@@ -8,12 +8,22 @@ class PlateScene(Scene):
   cell_size: tuple[int, int] = (60, 60)
 
   def init(self):
+    self.deck = [
+      Cell(
+          self,
+          x * self.cell_size[0] + 100,
+          self.game.screen_height - 100 - self.cell_size[1],
+          x, 0,
+          self.cell_size[0],
+          self.cell_size[1]
+        ) for x in range(10)
+    ]
     self.plate = [
       [
         Cell(
           self,
           x * self.cell_size[0] + 100,
-          y * self.cell_size[1] + 150,
+          y * self.cell_size[1] + 100,
           x, y,
           self.cell_size[0],
           self.cell_size[1]

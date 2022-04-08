@@ -1,4 +1,5 @@
 import pygame
+from objects.Mouse import Mouse
 from objects.Scene import Scene
 
 class Game:
@@ -15,6 +16,8 @@ class Game:
     self.screen_width = width
     self.screen_height = height
 
+    self.mouse = Mouse()
+
   def set_tick(self, tick):
     self.tick = tick
 
@@ -30,10 +33,22 @@ class Game:
 
     if not self.current_scene.inited:
       self.current_scene.init()
+      self.current_scene.inited = True
+
+    for entity in self.current_scene.entities:
+      if not entity.inited:
+        entity.init()
+        entity.inited = True
       
+    self.mouse.update()
     self.current_scene.update(delta)
+
+    for entity in self.current_scene.entities:
+      entity.update(delta)
 
   def draw(self):
     self.context.fill((0, 0, 0))
     self.current_scene.draw()
+    for entity in self.current_scene.entities:
+      entity.draw()
     

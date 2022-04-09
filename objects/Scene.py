@@ -5,7 +5,7 @@ if TYPE_CHECKING:
   from Entity import Entity
 
 class Scene:
-  game: Game
+  game: Game = None
   entities: list[Entity] = []
 
   def __init__(self, game: Game, name: str):
@@ -14,6 +14,12 @@ class Scene:
     self.game = game
 
   def init(self):
+    pass
+
+  def prescene_draw(self):
+    pass
+
+  def postoverlay_draw(self):
     pass
 
   def draw(self):

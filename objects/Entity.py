@@ -1,7 +1,14 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+  from Game import Game
+  from Scene import Scene
 
 class Entity:
-  def __init__(self, scene, name: str, x: int, y: int, width: int, height: int):
+  scene: Scene = None
+  game: Game = None
+
+  def __init__(self, scene: Scene, name: str, x: int, y: int, width: int, height: int):
     self.inited = False
 
     self.name = name
@@ -12,10 +19,16 @@ class Entity:
     self.width = width
     self.height = height
 
-  def collision(self, test: Entity):
+  def collision(self, test: Entity) -> bool:
     return self.x < test.x + test.width and self.x + self.width > test.x and self.y < test.y + test.height and self.y + self.height > test.y
     
   def init(self):
+    pass
+
+  def prescene_draw(self):
+    pass
+
+  def postoverlay_draw(self):
     pass
 
   def draw(self):

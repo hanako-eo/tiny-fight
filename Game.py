@@ -7,6 +7,8 @@ class Game:
   scenes: list[Scene] = []
   current_scene: Scene = None
   overlays: list[Scene] = []
+  
+  mouse: Mouse
 
   def __init__(self, name: str, width: int, height: int, image: str = None):
     pygame.display.set_caption(name)
@@ -66,9 +68,19 @@ class Game:
 
   def draw(self):
     self.context.fill((0, 0, 0))
+
+    for overlay in self.overlays:
+      overlay.prescene_draw()
+      for entity in overlay.entities:
+        entity.prescene_draw()
+
     self.__draw__(self.current_scene)
     for overlay in self.overlays:
       self.__draw__(overlay)
+
+    self.current_scene.postoverlay_draw()
+    for entity in self.current_scene.entities:
+      entity.postoverlay_draw()
 
   def __draw__(self, scene: Scene):
     scene.draw()

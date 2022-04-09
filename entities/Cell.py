@@ -6,9 +6,10 @@ class Cell(Entity):
   cell_pos: tuple[int, int]
   color: tuple[int, int, int]
 
-  def __init__(self, scene, x: int, y: int, cell_x: int, cell_y: int, width: int, height: int, active: bool = False):
-    super().__init__(scene, f"cell({cell_x}, {cell_y})", x, y, width, height)
-    self.cell_pos = (cell_x, cell_y)
+  def __init__(self, scene, plate_scene, x: int, y: int, cell_pos: tuple[int, int], size: int, active: bool = False):
+    super().__init__(scene, f"cell{cell_pos}", x, y, size, size)
+    self.plate_scene = plate_scene
+    self.cell_pos = cell_pos
 
     self.scene.entities.append(self)
     self.active = active
@@ -20,6 +21,16 @@ class Cell(Entity):
     self.color = self.default_color
     if self.active and self.collision(self.game.mouse):
       self.color = (0, 255, 0, 1)
+      troop = self.game.mouse.selection
+      if self.game.mouse.left and troop != None:
+        t = troop(
+          self.plate_scene, 
+          self.x, 
+          self.y,
+          self.cell_pos
+        )
+        self.plate_scene.plate[self.cell_pos[0]][self.cell_pos[1]] = t
+        self.game.mouse.selection = None
 
   def draw(self):
     pygame.draw.rect(

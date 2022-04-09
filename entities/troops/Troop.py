@@ -2,20 +2,19 @@ import pygame
 from objects.Entity import Entity
 
 class Troop(Entity):
-  def __init__(self, scene, x: int, y: int, cell_x: int, cell_y: int, width: int, height: int):
-    super().__init__(scene, "Troop", x, y, width, height)
-    self.cell_pos = (cell_x, cell_y)
+  def __init__(self, scene, x: int, y: int, cell_pos: tuple[int, int]):
+    super().__init__(scene, "Troop", x, y, 60, 60)
+    self.cell_pos = cell_pos
 
     self.scene.entities.append(self)
-    self.active = active
+    self.color = (0, 200, 0)
 
-  def init(self):
-    self.default_color = (255, 0, 0, 0.5) if (self.cell_pos[0] + self.cell_pos[1]) % 2 == 0 else (255, 0, 255, 0.5)
+  # def init(self):
+    # self.default_color = (0, 200, 0)
 
-  def update(self, _):
-    self.color = self.default_color
-    if self.active and self.collision(self.game.mouse):
-      self.color = (0, 255, 0, 1)
+  # def update(self, _):
+    # if self.active and self.collision(self.game.mouse):
+    #   self.color = (0, 255, 0, 1)
 
   def draw(self):
     pygame.draw.rect(

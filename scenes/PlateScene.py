@@ -1,16 +1,17 @@
+from pprint import pprint
+
+from constant import EMPTY
 from entities.Cell import Cell
 from entities.cards.TroopCard import TroopCard
+from entities.troops.Troop import Troop
 from objects.Scene import Scene
-
-EMPTY = 0
 
 class PlateScene(Scene):
   plate: list[list[int]] = []
-  cell_size: int = 60
 
   def init(self):
     self.deck = [
-      TroopCard(self, 0, self.cell_size)
+      TroopCard(self, 0, Troop)
     ]
     self.plate = [
       [

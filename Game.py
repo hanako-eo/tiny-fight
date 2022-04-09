@@ -19,7 +19,7 @@ class Game:
     self.screen_width = width
     self.screen_height = height
 
-    self.mouse = Mouse()
+    self.mouse = Mouse(self)
 
   def set_tick(self, tick):
     self.tick = tick

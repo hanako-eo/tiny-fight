@@ -34,5 +34,5 @@ class Entity:
   def draw(self):
     pass
 
-  def update(self):
+  def update(self, delta: float):
     pass

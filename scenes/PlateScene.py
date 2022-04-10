@@ -11,7 +11,7 @@ class PlateScene(Scene):
   plate: list[list[int]] = []
 
   def init(self):
-    self.state = RoundMachine()
+    self.state = RoundMachine(self.game)
 
     self.deck = [
       TroopCard(self, 0, Troop)
@@ -24,8 +24,10 @@ class PlateScene(Scene):
 
   def update(self, delta: float):
     self.state.current.update(delta)
+    if self.state.current.name == "cooldown" and self.state.current.value <= 0:
+      self.state.use("play")
 
   def draw(self):
     if self.state.current.name == "cooldown":
       font = pygame.font.SysFont("Arial", 24)
-      self.game.context.blit(font.render(self.state.current.display(), True, (255, 255, 255)), (20, 20))
+      self.game.context.blit(font.render(self.state.current.display(), True, (255, 255, 255, 100)), (20, 20))

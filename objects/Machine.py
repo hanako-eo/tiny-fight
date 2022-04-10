@@ -20,7 +20,7 @@ class Machine:
     state = self.states[state_name]
 
     if self.current.allow_transition(state) and state.allow_transition(self.current):
-      current_state.exit()
+      self.current.exit()
       state.enter()
       self.current = state
 

@@ -37,9 +37,7 @@ class Game:
         return
 
   def remove_overlay(self, overlay_name: str):
-    for overlay in self.overlays:
-      if overlay.name == overlay_name:
-        self.overlays.remove(overlay)
+    self.overlays = list(filter(lambda overlay: overlay.name != overlay_name, self.overlays))
 
   def update(self, delta: float):
     if self.current_scene == None:

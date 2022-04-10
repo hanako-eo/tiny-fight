@@ -12,6 +12,7 @@ class Scene:
     self.inited = False
     self.name = name
     self.game = game
+    self.entities = []
 
   def init(self):
     pass

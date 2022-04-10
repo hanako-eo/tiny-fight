@@ -10,7 +10,3 @@ class RoundMachine(Machine):
       "play": PlayState(game),
       "extra": State("extra")
     }, "cooldown")
-
-  # start = cooldown.to(play)
-  # end = play.to(extra)
-  # wait = extra.to(cooldown)

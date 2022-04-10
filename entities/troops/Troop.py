@@ -3,7 +3,8 @@ import draw
 from constant import EMPTY
 from functions import pos
 from objects.Entity import Entity
-from objects.Timer import Tick
+from objects.Timer import *
+from states.machines.TroopMachine import TroopMachine
 
 class Troop(Entity):
   def __init__(self, scene, x: int, y: int, cell_pos: list[int, int]):
@@ -13,11 +14,12 @@ class Troop(Entity):
     self.scene.entities.append(self)
     self.color = (0, 200, 0)
 
-    self.move = Tick(self.move, 120)
+    self.state = TroopMachine(self)
+    self.timer = Tick(self.state.current.update, 120)
     self.enemy = False
 
   def update(self, delta):
-    self.move.update()
+    self.timer.update(delta)
 
   def move(self):
     i = -2 * int(self.enemy) + 1

@@ -1,4 +1,5 @@
 import pygame
+import draw
 from objects.Entity import Entity
 
 class Cell(Entity):
@@ -11,16 +12,16 @@ class Cell(Entity):
     self.plate_scene = plate_scene
     self.cell_pos = cell_pos
 
-    self.scene.entities.append(self)
+    scene.entities.append(self)
     self.active = active
 
   def init(self):
-    self.default_color = (255, 0, 0, 0.5) if (self.cell_pos[0] + self.cell_pos[1]) % 2 == 0 else (255, 0, 255, 0.5)
+    self.default_color = (255, 0, 0, 100) if (self.cell_pos[0] + self.cell_pos[1]) % 2 == 0 else (255, 0, 255, 100)
 
   def update(self, _):
     self.color = self.default_color
     if self.active and self.collision(self.game.mouse):
-      self.color = (0, 255, 0, 1)
+      self.color = (0, 255, 0)
       troop = self.game.mouse.selection
       if self.game.mouse.left and troop != None:
         t = troop(
@@ -33,14 +34,12 @@ class Cell(Entity):
         self.game.mouse.selection = None
 
   def draw(self):
-    pygame.draw.rect(
-      self.game.context,
+    draw.rect(
+      self.game.context, 
       self.color,
-      [
-        self.x, 
-        self.y, 
-        self.width, 
-        self.height
-      ],
+      self.x, 
+      self.y, 
+      self.width, 
+      self.height
     )
   

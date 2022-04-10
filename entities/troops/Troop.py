@@ -1,4 +1,5 @@
 import pygame
+import draw
 from objects.Entity import Entity
 
 class Troop(Entity):
@@ -16,15 +17,13 @@ class Troop(Entity):
     # if self.active and self.collision(self.game.mouse):
     #   self.color = (0, 255, 0, 1)
 
-  def draw(self):
-    pygame.draw.rect(
+  def postoverlay_draw(self):
+    draw.rect(
       self.game.context,
       self.color,
-      [
-        self.x, 
-        self.y, 
-        self.width, 
-        self.height
-      ],
+      self.x, 
+      self.y, 
+      self.width, 
+      self.height
     )
   

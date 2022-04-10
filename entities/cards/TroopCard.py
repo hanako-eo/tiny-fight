@@ -1,5 +1,6 @@
 from typing import Type
 import pygame
+import draw
 
 from constant import CELL_SIZE
 from objects.Entity import Entity
@@ -36,14 +37,12 @@ class TroopCard(Entity):
       self.game.mouse.selection = self.troop
 
   def postoverlay_draw(self):
-    pygame.draw.rect(
+    draw.rect(
       self.game.context,
       self.color,
-      [
-        self.x, 
-        self.y, 
-        self.width, 
-        self.height
-      ],
+      self.x, 
+      self.y, 
+      self.width, 
+      self.height
     )
   

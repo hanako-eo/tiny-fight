@@ -5,5 +5,4 @@ class PlayState(State):
     super().__init__("play", game)
 
   def enter(self):
-    print(self.value)
     self.value.remove_overlay("OverlayScene")

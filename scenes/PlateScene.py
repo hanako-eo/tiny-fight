@@ -24,7 +24,7 @@ class PlateScene(Scene):
 
   def update(self, delta: float):
     self.state.current.update(delta)
-    if self.state.current.name == "cooldown" and self.state.current.value <= 0:
+    if self.state.match("cooldown") and self.state.current.value <= 0:
       self.state.use("play")
 
   def draw(self):

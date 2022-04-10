@@ -14,6 +14,9 @@ class Machine:
     else:
       self.current = states[default]
 
+  def match(self, state_name: str) -> bool:
+    return self.current.name == state_name
+
   def use(self, state_name: str) -> bool:
     if not self.can(state_name):
       return False

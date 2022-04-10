@@ -14,5 +14,5 @@ class State:
   def exit(self):
     pass
 
-  def allow_transition(self, name: str, state: 'State') -> bool:
+  def allow_transition(self, order: int, state: 'State') -> bool:
     return True

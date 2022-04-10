@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import Optional, TYPE_CHECKING
+from constant import NEXT, PREV
 if TYPE_CHECKING:
   from State import State
 
@@ -19,7 +20,7 @@ class Machine:
 
     state = self.states[state_name]
 
-    if self.current.allow_transition(state) and state.allow_transition(self.current):
+    if self.current.allow_transition(NEXT, state) and state.allow_transition(PREV, self.current):
       self.current.exit()
       state.enter()
       self.current = state

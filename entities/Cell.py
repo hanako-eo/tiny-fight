@@ -28,7 +28,7 @@ class Cell(Entity):
           self.plate_scene, 
           self.x, 
           self.y,
-          self.cell_pos
+          list(self.cell_pos)
         )
         self.plate_scene.plate[self.cell_pos[0]][self.cell_pos[1]] = t
         self.game.mouse.selection = None

@@ -1,4 +1,5 @@
 from constant import CELL_SIZE
+from functions import pos
 from entities.Cell import Cell
 from objects.Scene import Scene
 
@@ -21,8 +22,7 @@ class OverlayScene(Scene):
         Cell(
           self,
           self.game.current_scene,
-          x * CELL_SIZE + 100,
-          y * CELL_SIZE + 100,
+          pos(x), pos(y),
           (x, y),
           CELL_SIZE,
           x < 2 or x > 7

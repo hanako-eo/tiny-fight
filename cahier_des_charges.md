@@ -30,7 +30,7 @@ Il y a 2 conditions de victoire :
   - Création d'un esport
   - Utilisation de l'unité admin pour remporter l'esport et gagner plus d'argent
 
-### partie sérieuse: ()
+### partie sérieuse: 
   - faire un jeu fonctionnel et sans bugs
   - Un jeu permissif pour pouvoir être créatifs dans la création d'unités
   - Des unités créatives (dans la limite du réalisable dans un tableau de tableau et pour des premières spé NSI) jeu tiny fights : "paint.exe" qui utilisera la coloration de grilles
@@ -43,10 +43,39 @@ Il y a 2 conditions de victoire :
   - Le système de levelling:
     - Une unité gagne des effets quand elle traverse le terrain sans mourir
     - Ces effets rajoutent des statistiques au choix (MAX : 3)
-    - Au bout de 3 effets,
+    - Au bout de 3 effets, le joueur peut choisir d'augmenter la troupe d'un niveau. Cette amélioration est spécifique à chaque troupe.
+  - La participation en plein match:
+    - Chaque troupe possède un tiny move utilisable en plein combat quand le joueur l'active, cette attaque possède un temps de chargement
+    - Le joueur possède des sorts activables avec des effets uniques
 
 ### Troupes (La partie VRAIMENT amusante)
+  - Le chevalier:
+    - Troupe légèrement plus puissante que la moyenne
+    - Tiny move: Lance une attaque plus puissante
+  - La valkyrie:
+    - Troupe plus faible que la moyenne qui frappe devant et les deux cases côté d'elle
+    - Tiny move: Lance une attaque plus puissante
+  - L'archer:
+    - Troupe d'attaque à portée de 2 cases ou sur la même colonne
+    - Tiny move: flèche coup critique pour tous les ennemis
   - Le lancier:
-  Troupe d'attaque à vitesse, PV, et vittesse d'attaque médiocre 
-  Tiny move: La troupe avance plus vite et lance une attaque très puissante sur le premier ennemi rencontré
+    - Troupe d'attaque à vitesse, PV, et vittesse d'attaque médiocre 
+    - Tiny move: La troupe avance plus vite et lance une attaque très puissante sur le premier ennemi rencontré
+  - Le bouclier:
+    - Troupe de défense avec beaucoup de PV
+    - Tiny move: Réduit l'attaque sur un cercle de rayon 2 cases
+  - Nécromancien:
+    - Troupe plus faible que la moyenne, invoque des Squelettes devant lui
+    - Tiny move: rend les squelettes plus puissants
+  - Squelette:
+    - Troupe faible mais attaque à peine plus faible que la moyenne
+  - Hana (healer):
+    - Troupe de soin qui guérit sur la même ligne
+    - Tiny move: change d'état (soin <==> attaque)
+
+### Pour l'avenir:
+  - Des animations
+  - Un menu
+  - Des explications détaillées sur chaque troupe (avec image)
+  - Des troupes supplémentaires (environ 5)
  

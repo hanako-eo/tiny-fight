@@ -1,15 +1,18 @@
-from pprint import pprint
+import pygame
 
 from constant import EMPTY
 from entities.Cell import Cell
 from entities.cards.TroopCard import TroopCard
 from entities.troops.Troop import Troop
 from objects.Scene import Scene
+from states.machines.RoundMachine import RoundMachine
 
 class PlateScene(Scene):
   plate: list[list[int]] = []
 
   def init(self):
+    self.state = RoundMachine()
+
     self.deck = [
       TroopCard(self, 0, Troop)
     ]
@@ -19,8 +22,10 @@ class PlateScene(Scene):
       ] for x in range(10)
     ]
 
-  # def draw(self):
-  #   pass
-    # for x in range(len(self.plate)):
-    #   for y in range(len(self.plate[x])):
-        
+  def update(self, delta: float):
+    self.state.current.update(delta)
+
+  def draw(self):
+    if self.state.current.name == "cooldown":
+      font = pygame.font.SysFont("Arial", 24)
+      self.game.context.blit(font.render(self.state.current.display(), True, (255, 255, 255)), (20, 20))

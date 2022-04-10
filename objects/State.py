@@ -5,14 +5,14 @@ class State:
     self.name = name
     self.value = value
 
-  def enter():
+  def enter(self):
     pass
 
-  def update(delta: float):
+  def update(self, delta: float):
     pass
 
-  def exit():
+  def exit(self):
     pass
 
-  def allow_transition(name: str, state: 'State') -> bool:
+  def allow_transition(self, name: str, state: 'State') -> bool:
     return True

@@ -45,6 +45,7 @@ class Troop(Entity):
       
 
   def postoverlay_draw(self):
+    life = self.width * (self.life / self.max_life)
     draw.rect(
       self.game.context,
       self.color,
@@ -53,6 +54,15 @@ class Troop(Entity):
       self.width, 
       self.height
     )
+    if not self.state.match("wait") and life >= 0:
+      draw.rect(
+        self.game.context,
+        (255, 0, 0),
+        self.x,
+        self.y,
+        life,
+        4
+      )
   
   def destroy(self):
     super().destroy()

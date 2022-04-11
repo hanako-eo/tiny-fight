@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Optional, TYPE_CHECKING
+from typing import Callable, Optional, TYPE_CHECKING
 from constant import NEXT, PREV
 if TYPE_CHECKING:
   from State import State
@@ -7,21 +7,21 @@ if TYPE_CHECKING:
 class Machine:
   current: State
 
-  def __init__(self, states: dict[str, State], default: Optional[str] = None):
+  def __init__(self, states: dict[str, Callable[[], State]], default: Optional[str] = None, *args):
     self.states = states
     if default == None or default not in states:
-      self.current = states[list(states.keys())[0]]
+      self.current = states[list(states.keys())[0]](*args)
     else:
-      self.current = states[default]
+      self.current = states[default](*args)
 
   def match(self, state_name: str) -> bool:
     return self.current.name == state_name
 
-  def use(self, state_name: str) -> bool:
+  def use(self, state_name: str, *args) -> bool:
     if not self.can(state_name):
       return False
 
-    state = self.states[state_name]
+    state = self.states[state_name](*args)
 
     if self.current.allow_transition(NEXT, state) and state.allow_transition(PREV, self.current):
       self.current.exit()
@@ -32,5 +32,5 @@ class Machine:
 
     return False
 
-  def can(self, state: string):
+  def can(self, state: str):
     return state in self.states

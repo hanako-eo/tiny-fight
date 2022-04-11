@@ -11,7 +11,7 @@ class PlateScene(Scene):
   plate: list[list[int]] = []
 
   def init(self):
-    self.state = RoundMachine(self.game)
+    self.state = RoundMachine()
 
     self.deck = [
       TroopCard(self, 0, Troop)
@@ -25,7 +25,7 @@ class PlateScene(Scene):
   def update(self, delta: float):
     self.state.current.update(delta)
     if self.state.match("cooldown") and self.state.current.value <= 0:
-      self.state.use("play")
+      self.state.use("play", self.game)
 
   def draw(self):
     if self.state.current.name == "cooldown":

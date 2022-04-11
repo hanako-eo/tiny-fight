@@ -36,3 +36,6 @@ class Entity:
 
   def update(self, delta: float):
     pass
+
+  def destroy(self):
+    self.scene.entities = list(filter(lambda entity: entity != self, self.scene.entities))

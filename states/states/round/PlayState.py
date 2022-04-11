@@ -8,4 +8,4 @@ class PlayState(State):
     self.value.remove_overlay("OverlayScene")
     for entity in self.value.current_scene.entities:
       if entity.name == "Troop":
-        entity.state.use("move")
+        entity.state.use("move", entity)

@@ -15,20 +15,34 @@ class Troop(Entity):
     self.color = (0, 200, 0)
 
     self.state = TroopMachine(self)
-    self.timer = Tick(self.state.current.update, 120)
+    self.timer = Tick(self.state.current.update, 30)
     self.enemy = cell_pos[0] > 7
+
+    self.max_life = 100
+    self.life = 100
+    self.attack = 20
+    self.defence = 20
 
   def update(self, delta):
     self.timer.update(delta)
+    if self.life <= 0:
+      self.destroy()
 
   def move(self):
     i = -2 * int(self.enemy) + 1
     [x, y] = self.cell_pos
-    if x+i >= 0 and x+i < 10 and self.scene.plate[x + i][y] == EMPTY:
-      self.scene.plate[x][y], self.scene.plate[x + i][y] = self.scene.plate[x + i][y], self.scene.plate[x][y]
+    if x+i < 0 or x+i >= 10:
+      return
+
+    next_cell = self.scene.plate[x + i][y]
+    if next_cell == EMPTY or next_cell.enemy == self.enemy:
+      self.scene.plate[x][y], self.scene.plate[x + i][y] = next_cell, self.scene.plate[x][y]
       self.cell_pos[0] += i
       self.x = pos(x+i)
       self.y = pos(y)
+    else:
+      self.state.use("attack", self, next_cell)
+      
 
   def postoverlay_draw(self):
     draw.rect(
@@ -39,4 +53,9 @@ class Troop(Entity):
       self.width, 
       self.height
     )
+  
+  def destroy(self):
+    super().destroy()
+    [x, y] = self.cell_pos
+    self.scene.plate[x][y] = EMPTY
   

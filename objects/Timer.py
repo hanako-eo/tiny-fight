@@ -2,6 +2,13 @@ class Timer:
   def __init__(self, callback, time):
     self.callback = callback
     self.time = time
+    self.reset()
+
+  def set_callback(self, callback):
+    self.callback = callback
+    self.reset()
+
+  def reset(self):
     self.delta = 0
 
   def update(self, delta: float):
@@ -14,6 +21,13 @@ class Tick:
   def __init__(self, callback, tick):
     self.callback = callback
     self.tick = tick
+    self.reset()
+
+  def set_callback(self, callback):
+    self.callback = callback
+    self.reset()
+
+  def reset(self):
     self.delta = 0
     self.wait = 0
 

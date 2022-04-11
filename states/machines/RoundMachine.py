@@ -1,7 +1,7 @@
 from objects.State import State
 from objects.Machine import Machine
-from states.states.CooldownState import CooldownState
-from states.states.PlayState import PlayState
+from states.states.round.CooldownState import CooldownState
+from states.states.round.PlayState import PlayState
 
 class RoundMachine(Machine):
   def __init__(self, game):

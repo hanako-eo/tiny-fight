@@ -6,9 +6,9 @@ class MoveState(State):
     super().__init__("move", troop)
 
   def enter(self):
-    self.value.timer.callback = self.update
+    self.value.timer.set_callback(self.update)
 
-  def update(self, delta):
+  def update(self, _):
     self.value.move()
 
   def allow_transition(self, order, state):

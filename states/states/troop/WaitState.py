@@ -6,7 +6,7 @@ class WaitState(State):
     super().__init__("wait", troop)
 
   def enter(self):
-    self.value.timer.callback = self.update
+    self.value.timer.set_callback(self.update)
 
   def allow_transition(self, order, state):
     return order == NEXT and state.name == "move"

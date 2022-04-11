@@ -16,7 +16,7 @@ class Troop(Entity):
 
     self.state = TroopMachine(self)
     self.timer = Tick(self.state.current.update, 120)
-    self.enemy = False
+    self.enemy = cell_pos[0] > 7
 
   def update(self, delta):
     self.timer.update(delta)

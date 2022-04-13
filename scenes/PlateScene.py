@@ -21,7 +21,7 @@ class PlateScene(Scene):
 
   def update(self, delta: float):
     self.state.current.update(delta)
-    if self.state.match("cooldown") and self.state.current.value <= 0:
+    if self.state.match("cooldown") and self.state.current.value <= 1:
       self.state.use("play", self.game)
 
     for _, value in self.plate:

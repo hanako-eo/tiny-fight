@@ -37,7 +37,7 @@ class Troop(Entity):
     next_cell = self.scene.plate.get(next_pos)
     if next_cell == EMPTY:
       self.scene.plate.move(next_pos, (x, y))
-    elif next_cell.enemy and not next_cell.state.match("dead"):
+    elif self.enemy != next_cell.enemy and not next_cell.state.match("dead"):
       self.state.use("attack", self, next_cell)
       next_cell.state.use("attack", next_cell, self)
       return False

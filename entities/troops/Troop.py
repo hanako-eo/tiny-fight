@@ -52,23 +52,13 @@ class Troop(Entity):
     if life < 0:
       return
 
-    draw.rect(
-      self.game.context,
-      self.color,
-      pos(x), 
-      pos(y), 
-      self.width, 
-      self.height
-    )
+    x = pos(x)
+    y = pos(y)
+
+    draw.rect(self.game.context, self.color, x, y, self.width, self.height)
     if not self.state.match("wait"):
-      draw.rect(
-        self.game.context,
-        (255, 0, 0),
-        pos(x), 
-        pos(y),
-        life,
-        4
-      )
+      draw.rect(self.game.context, (255, 0, 0, 0.5), x, y, self.width, 4)
+      draw.rect(self.game.context, (255, 0, 0), x, y, life, 4)
   
   def destroy(self):
     super().destroy()

@@ -16,7 +16,7 @@ class Cell(Entity):
     self.active = active
 
   def init(self):
-    self.default_color = (255, 0, 0, 100) if (self.cell_pos[0] + self.cell_pos[1]) % 2 == 0 else (255, 0, 255, 100)
+    self.default_color = (255, 0, 0, 0.3) if (self.cell_pos[0] + self.cell_pos[1]) % 2 == 0 else (255, 0, 255, 0.3)
 
   def update(self, _):
     self.color = self.default_color

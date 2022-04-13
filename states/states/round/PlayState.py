@@ -1,3 +1,4 @@
+from constant import EMPTY
 from objects.State import State
 
 class PlayState(State):
@@ -6,6 +7,6 @@ class PlayState(State):
 
   def enter(self):
     self.value.remove_overlay("OverlayScene")
-    for entity in self.value.current_scene.entities:
-      if entity.name == "Troop":
+    for _, entity in self.value.current_scene.plate:
+      if entity != EMPTY:
         entity.state.use("move", entity)

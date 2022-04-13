@@ -10,9 +10,9 @@ class AttackState(State):
 
   def update(self, _):
     (troop, enemy) = self.value
-    enemy.life -= troop.attack - troop.attack * (enemy.defence / 100)
-    if troop.life <= 0:
-      return 
+    damage = troop.attack - troop.attack * (enemy.defence / 100)
+    enemy.life -= damage
+    troop.life -= enemy.thorns * damage
     if enemy.life <= 0:
       troop.state.use("move", troop)
 

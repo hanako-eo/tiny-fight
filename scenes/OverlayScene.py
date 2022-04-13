@@ -28,10 +28,4 @@ class OverlayScene(Scene):
           x < 2 or x > 7
         ) for y in range(5)
       ] for x in range(10)
-    ]
-
-  # def draw(self):
-  #   pass
-    # for x in range(len(self.plate)):
-    #   for y in range(len(self.plate[x])):
-        
+    ]        

@@ -26,6 +26,7 @@ clock = pygame.time.Clock()
 running = True
 while running:
   delta = clock.tick(game.get_tick()) / 1000
+  game.delta = delta
   game.update(delta)
   game.draw()
 

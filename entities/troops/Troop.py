@@ -10,9 +10,10 @@ class Troop(Entity):
   def __init__(self, scene, x: int, y: int):
     super().__init__(scene, "Troop", x, y, 60, 60)
     self.color = (0, 200, 0)
+    self._speed = 60
 
     self.state = TroopMachine(self)
-    self.timer = Tick(self.state.current.update, 60)
+    self.timer = Tick(self.state.current.update, self._speed)
     self.enemy = x > 7
     self.moved = False
 
@@ -22,6 +23,13 @@ class Troop(Entity):
     self.defence = 20
     self.thorns = 0
     self.id = x+y
+
+  def get_speed(self):
+    return self._speed
+
+  def set_speed(self, value):
+    self._speed = value
+    self.timer.set_waiting(value)
 
   def update(self, delta):
     self.timer.update(delta)
@@ -41,7 +49,7 @@ class Troop(Entity):
       self.state.use("attack", self, next_cell)
       next_cell.state.use("attack", next_cell, self)
       return False
-    elif next_cell.state.match("dead") or not next_cell.state.match("attack") and next_cell.move(x + i, y):
+    elif next_cell.state.match("dead") or not next_cell.state.match("attack") and next_cell.timer.can(self.game.delta) and next_cell.move(x + i, y):
       self.scene.plate.move(next_pos, (x, y))
 
     self.moved = True

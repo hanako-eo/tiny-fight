@@ -20,6 +20,7 @@ class Game:
     self.screen_height = height
 
     self.mouse = Mouse(self)
+    self.delta = 0
 
   def set_tick(self, tick):
     self.tick = tick

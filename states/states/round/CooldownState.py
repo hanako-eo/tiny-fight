@@ -2,7 +2,7 @@ from objects.State import State
 
 class CooldownState(State):
   def __init__(self):
-    super().__init__("cooldown", 181)
+    super().__init__("cooldown", 30)
 
   def enter(self):
     self.value = 181

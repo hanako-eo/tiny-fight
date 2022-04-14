@@ -32,12 +32,13 @@ class Cell(Entity):
         self.game.mouse.selection = None
 
   def draw(self):
+    draw.fill(self.color)
     draw.rect(
-      self.game.context, 
-      self.color,
+      self.game.context,
       self.x, 
       self.y, 
       self.width, 
       self.height
     )
+    draw.reset()
   

@@ -55,10 +55,16 @@ class Troop(Entity):
     x = pos(x)
     y = pos(y)
 
-    draw.rect(self.game.context, self.color, x, y, self.width, self.height)
+    draw.fill(self.color)
+    draw.rect(self.game.context, x, y, self.width, self.height)
+    draw.reset()
     if not self.state.match("wait"):
-      draw.rect(self.game.context, (255, 0, 0, 0.5), x, y, self.width, 4)
-      draw.rect(self.game.context, (255, 0, 0), x, y, life, 4)
+      draw.fill((255, 0, 0, 0.5))
+      draw.rect(self.game.context, x, y, self.width, 4)
+      draw.reset()
+      draw.fill((255, 0, 0))
+      draw.rect(self.game.context, x, y, life, 4)
+      draw.reset()
   
   def destroy(self):
     super().destroy()

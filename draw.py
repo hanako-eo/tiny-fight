@@ -1,13 +1,48 @@
 import pygame
 
-def rect(context: pygame.Surface, color: tuple[int, int, int] | tuple[int, int, int, float], x: int, y: int, width: int, height: int):
-  alpha_color = (
-    color[0], 
-    color[1], 
-    color[2], 
-    int(color[3] * 255) if len(color) > 3 and color[3] <= 1 else 255
+loaded = {}
+_fill_color = (0, 0, 0, 0)
+_scale = 1
+
+def scale(value):
+  global _scale
+  _scale = value
+
+def fill(value):
+  global _fill_color
+  _fill_color = (
+    value[0], 
+    value[1], 
+    value[2], 
+    int(value[3] * 255) if len(value) > 3 and value[3] <= 1 else 255
   )
 
+def rect(context: pygame.Surface, x: int, y: int, width: int, height: int):
   shape = pygame.Surface((width, height), pygame.SRCALPHA)
-  pygame.draw.rect(shape, alpha_color, shape.get_rect())
+  pygame.draw.rect(shape, _fill_color, shape.get_rect())
   context.blit(shape, [x, y, width, height])
+
+def image(context: pygame.Surface, src: str, x: int, y: int, width: int, height: int):
+  global loadeds
+  if src not in loaded:
+    loaded[src] = pygame.image.load(src).convert_alpha()
+  context.blit(loaded[src], [x, y, width, height])
+
+def sprite(context: pygame.Surface, src: str, sx: int, sy: int, swidth: int, sheight: int, dx: int = -1, dy: int = -1, dwidth: int = -1, dheight: int = -1, color = (0, 0, 0)):
+  global loadeds
+  if src not in loaded:
+    loaded[src] = pygame.image.load(src).convert_alpha()
+
+  if dx < 0 or dy < 0 or dwidth < 0 or dheight < 0:
+    dx = dy = 0
+    dwidth, dheight = swidth, sheight
+    
+  image = pygame.Surface((dwidth, dheight)).convert_alpha()
+  image.blit(loaded[src], (0, 0), (dx, dy, dwidth, dheight))
+  image = pygame.transform.scale(image, (swidth * _scale, sheight * _scale))
+  image.set_colorkey(color)
+
+  context.blit(image, [sx, sy, swidth, sheight])
+
+def reset():
+  scale(1)

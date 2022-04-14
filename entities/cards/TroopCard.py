@@ -37,12 +37,13 @@ class TroopCard(Entity):
       self.game.mouse.selection = self.troop
 
   def postoverlay_draw(self):
+    draw.fill(self.color)
     draw.rect(
       self.game.context,
-      self.color,
       self.x, 
       self.y, 
       self.width, 
       self.height
     )
+    draw.reset()
   

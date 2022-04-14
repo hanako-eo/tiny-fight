@@ -3,6 +3,7 @@ import pygame
 from constant import EMPTY
 from entities.Cell import Cell
 from entities.cards.KnightCard import KnightCard
+from entities.cards.ShieldCard import ShieldCard
 from entities.cards.TroopCard import TroopCard
 from entities.troops.Troop import Troop
 from objects.Plate import Plate
@@ -18,6 +19,7 @@ class PlateScene(Scene):
     self.deck = [
       TroopCard(self, 0, Troop),
       KnightCard(self, 1),
+      ShieldCard(self, 2),
     ]
     self.plate = Plate()
 

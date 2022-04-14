@@ -2,6 +2,7 @@ import pygame
 
 from constant import EMPTY
 from entities.Cell import Cell
+from entities.cards.KnightCard import KnightCard
 from entities.cards.TroopCard import TroopCard
 from entities.troops.Troop import Troop
 from objects.Plate import Plate
@@ -15,7 +16,8 @@ class PlateScene(Scene):
     self.state = RoundMachine()
 
     self.deck = [
-      TroopCard(self, 0, Troop)
+      TroopCard(self, 0, Troop),
+      KnightCard(self, 1),
     ]
     self.plate = Plate()
 

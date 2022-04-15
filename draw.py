@@ -1,6 +1,12 @@
+from email.policy import default
 import pygame
 
 loaded = {}
+default_style = {
+  "reset": True,
+  "font": {"size": 24, "family": "Arial"}
+}
+_style = default_style
 _fill_color = (0, 0, 0, 0)
 _scale = 1
 
@@ -16,6 +22,18 @@ def fill(value):
     value[2], 
     int(value[3] * 255) if len(value) > 3 and value[3] <= 1 else 255
   )
+
+def style(value: dict[str, object]):
+  if value.get("reset") == True:
+    _style = value
+  else:
+    _style |= value
+
+def text(context: pygame.Surface, x: int, y: int, content: str):
+  font = pygame.font.SysFont(_style["font"]["family"], _style["font"]["size"])
+  surf = font.render(content, True, _fill_color)
+  surf.set_alpha(_fill_color[3])
+  context.blit(surf, (x, y))
 
 def rect(context: pygame.Surface, x: int, y: int, width: int, height: int):
   shape = pygame.Surface((width, height), pygame.SRCALPHA)
@@ -46,3 +64,5 @@ def sprite(context: pygame.Surface, src: str, sx: int, sy: int, swidth: int, she
 
 def reset():
   scale(1)
+  fill((255, 255, 255))
+  style(default_style)

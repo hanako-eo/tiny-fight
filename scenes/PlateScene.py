@@ -1,7 +1,6 @@
-import pygame
+import draw
 
 from constant import EMPTY
-from entities.Cell import Cell
 from entities.cards.KnightCard import KnightCard
 from entities.cards.ShieldCard import ShieldCard
 from entities.cards.LancerCard import LancerCard
@@ -36,9 +35,8 @@ class PlateScene(Scene):
 
   def draw(self):
     if self.state.match("cooldown"):
-      font = pygame.font.SysFont("Arial", 24)
-      self.game.context.blit(font.render(self.state.current.display(), True, (255, 255, 255, 100)), (20, 20))
-
+      draw.text(self.game.context, 20, 20, self.state.current.display())
+      
   def postoverlay_draw(self):
     for pos, value in self.plate:
       if value != EMPTY:

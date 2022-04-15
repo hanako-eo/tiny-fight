@@ -12,13 +12,13 @@ class TroopCard(Entity):
 
   def __init__(self, scene, deck_index: int, troop: Type[Troop]):
     super().__init__(scene, "TroopCard", 0, 0, 40, 40)
+    self.color = (0, 200, 0)
     self.deck_index = deck_index
     self.troop = troop
 
     self.scene.entities.append(self)
 
   def init(self):
-    self.color = (0, 0, 200)
     self.x = self.deck_index * CELL_SIZE + 100 + (CELL_SIZE - self.width) / 2
     self.y = self.game.screen_height - 100 - CELL_SIZE - (CELL_SIZE - self.height) / 2
 

@@ -35,9 +35,13 @@ def text(context: pygame.Surface, x: int, y: int, content: str):
   surf.set_alpha(_fill_color[3])
   context.blit(surf, (x, y))
 
-def rect(context: pygame.Surface, x: int, y: int, width: int, height: int):
+def measure_text(text: str):
+  font = pygame.font.SysFont(_style["font"]["family"], _style["font"]["size"])
+  return font.size(text)
+
+def rect(context: pygame.Surface, x: int, y: int, width: int, height: int, border_radius: int = -1):
   shape = pygame.Surface((width, height), pygame.SRCALPHA)
-  pygame.draw.rect(shape, _fill_color, shape.get_rect())
+  pygame.draw.rect(shape, _fill_color, shape.get_rect(), border_radius=border_radius)
   context.blit(shape, [x, y, width, height])
 
 def image(context: pygame.Surface, src: str, x: int, y: int, width: int, height: int):

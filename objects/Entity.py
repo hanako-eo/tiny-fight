@@ -1,10 +1,11 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
+from EventBus import EventBus
 if TYPE_CHECKING:
   from Game import Game
   from Scene import Scene
 
-class Entity:
+class Entity(EventBus):
   scene: Scene = None
   game: Game = None
 

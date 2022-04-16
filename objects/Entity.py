@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from EventBus import EventBus
+from objects.EventBus import EventBus
 if TYPE_CHECKING:
   from Game import Game
   from Scene import Scene

@@ -1,5 +1,3 @@
-import asyncio
-
 class EventBus():
   def __init__(self):
     self.listeners = {}
@@ -18,4 +16,4 @@ class EventBus():
   def emit(self, event_name, event):
     listeners = self.listeners.get(event_name, [])
     for listener in listeners:
-      asyncio.create_task(listener(event))
+      listener(*event)

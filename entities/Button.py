@@ -11,7 +11,7 @@ class Button(Entity):
   def update(self, delta):
     self.hover = self.collision(self.game.mouse)
     if self.hover and self.game.mouse.click:
-      self.emit("click")
+      self.emit("click", [])
   
   def draw(self):
     (width, height) = draw.measure_text(self.content)

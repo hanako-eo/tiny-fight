@@ -6,6 +6,9 @@ from objects.Scene import Scene
 class OverlayScene(Scene):
   plate: list[list[int]] = []
 
+  def __init__(self, game):
+    super().__init__(game, "OverlayScene")
+
   def init(self):
     self.deck = [
       Cell(

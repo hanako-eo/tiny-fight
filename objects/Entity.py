@@ -10,6 +10,7 @@ class Entity(EventBus):
   game: Game = None
 
   def __init__(self, scene: Scene, name: str, x: int, y: int, width: int, height: int):
+    super().__init__()
     self.inited = False
 
     self.name = name

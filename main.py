@@ -1,5 +1,6 @@
 import pygame
 from Game import Game
+from scenes.MenuScene import MenuScene
 from scenes.PlateScene import PlateScene
 from scenes.OverlayScene import OverlayScene
 
@@ -12,14 +13,10 @@ game = Game(
   image="./assets/icon.png"
 )
 
-game.add_scene(
-  PlateScene(game, "PlateScene")
-)
-game.add_scene(
-  OverlayScene(game, "OverlayScene")
-)
+game.add_scene(MenuScene(game))
+game.add_scene(PlateScene(game))
+game.add_scene(OverlayScene(game))
 
-game.add_overlay("OverlayScene")
 game.set_tick(60)
 
 clock = pygame.time.Clock()

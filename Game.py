@@ -31,6 +31,12 @@ class Game:
   def add_scene(self, scene: Scene):
     self.scenes.append(scene)
 
+  def change_scene(self, name: str):
+    for scene in self.scenes:
+      if scene.name == name:
+        self.current_scene = scene
+        return
+
   def add_overlay(self, overlay_name: str):
     for scene in self.scenes:
       if scene.name == overlay_name:

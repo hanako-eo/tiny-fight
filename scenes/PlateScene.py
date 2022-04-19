@@ -13,7 +13,11 @@ from states.machines.RoundMachine import RoundMachine
 class PlateScene(Scene):
   plate: list[list[int]] = []
 
+  def __init__(self, game):
+    super().__init__(game, "PlateScene")
+
   def init(self):
+    self.game.add_overlay("OverlayScene")
     self.state = RoundMachine()
 
     self.deck = [

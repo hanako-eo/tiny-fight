@@ -22,6 +22,8 @@ class Troop(Entity):
     self.attack = 20
     self.defence = 20
     self.thorns = 0
+
+    self.watch_range = (1, 0)
     self.id = x+y
 
   def get_speed(self):
@@ -33,27 +35,43 @@ class Troop(Entity):
 
   def update(self, delta):
     self.timer.update(delta)
+    print(self.id, self.life)
     if self.life <= 0:
       self.state.use("dead", self)
 
   def move(self, x, y):
-    i = -2 * int(self.enemy) + 1
-    if x+i < 0 or x+i >= 10:
+    direction = -2 * int(self.enemy) + 1
+    if x+direction < 0 or x+direction >= 10:
+      self.state.use("finish", self)
       return False
 
-    next_pos = (x + i, y)
-    next_cell = self.scene.plate.get(next_pos)
-    if next_cell == EMPTY:
-      self.scene.plate.move(next_pos, (x, y))
-    elif self.enemy != next_cell.enemy and not next_cell.state.match("dead"):
-      self.state.use("attack", self, next_cell)
-      next_cell.state.use("attack", next_cell, self)
-      return False
-    elif next_cell.state.match("dead") or not next_cell.state.match("attack") and next_cell.timer.can(self.game.delta) and next_cell.move(x + i, y):
-      self.scene.plate.move(next_pos, (x, y))
+    enemy = None
+    for i in range(1, self.watch_range[0]+1):
+      future_cell = self.see(x + direction * i, y)
+      if future_cell != EMPTY and self.enemy != future_cell.enemy and not future_cell.state.match("dead"):
+        enemy = future_cell
+        break
 
+    if enemy != None:
+      self.state.use("attack", self, enemy)
+      # enemy.state.use("attack", enemy, self)
+      return False
+
+    # next_cell = self.scene.plate.get(next_pos)
+    # if next_cell == EMPTY:
+    # elif self.enemy != next_cell.enemy and not next_cell.state.match("dead"):
+    # elif next_cell.state.match("dead") or not next_cell.state.match("attack") and next_cell.timer.can(self.game.delta) and next_cell.move(x + direction, y):
+    #   self.scene.plate.move(next_pos, (x, y))
+
+    self.scene.plate.move((x + direction, y), (x, y))
     self.moved = True
     return True
+
+  def see(self, x, y):
+    if 10 > x > 0:
+      return self.scene.plate.get((x, y))
+    return EMPTY
+
 
   def draw(self, x: int, y: int):
     life = self.width * (self.life / self.max_life)
@@ -77,4 +95,6 @@ class Troop(Entity):
   def destroy(self):
     super().destroy()
     self.scene.plate.remove(self)
+    self.state = None
+    self.timer = None
   

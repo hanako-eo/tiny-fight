@@ -4,6 +4,7 @@ from constant import EMPTY
 from entities.cards.KnightCard import KnightCard
 from entities.cards.ShieldCard import ShieldCard
 from entities.cards.LancerCard import LancerCard
+from entities.cards.ArcherCard import ArcherCard
 from entities.cards.TroopCard import TroopCard
 from entities.troops.Troop import Troop
 from objects.Plate import Plate
@@ -25,6 +26,7 @@ class PlateScene(Scene):
       KnightCard(self, 1),
       ShieldCard(self, 2),
       LancerCard(self, 3),
+      ArcherCard(self, 4)
     ]
     self.plate = Plate()
 

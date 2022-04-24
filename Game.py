@@ -19,7 +19,8 @@ class Game:
     self.screen_width = width
     self.screen_height = height
 
-    self.change_queue = []
+    self.change_scene_queue = []
+    self.queue = []
     self.mouse = Mouse(self)
     self.delta = 0
 
@@ -33,7 +34,7 @@ class Game:
     self.scenes.append(scene)
 
   def change_scene(self, name: str):
-    self.change_queue.append(name)
+    self.change_scene_queue.append(name)
 
   def add_overlay(self, overlay_name: str):
     for scene in self.scenes:
@@ -48,11 +49,16 @@ class Game:
     if self.current_scene == None:
       self.current_scene = self.scenes[0]
 
-    for name in self.change_queue:
+    for name in self.change_scene_queue:
       for scene in self.scenes:
         if scene.name == name:
           self.current_scene = scene
           break
+    self.change_scene_queue = []
+
+    for action in self.queue:
+      action()
+    self.queue = []
 
     self.mouse.update()
 

@@ -17,6 +17,10 @@ class Timer:
   def can(self, delta):
     return self.time <= self.delta + delta
 
+  def force(self):
+    self.callback(self.delta)
+    self.reset()
+
   def update(self, delta: float):
     self.delta += delta
     if self.time <= self.delta:
@@ -42,6 +46,10 @@ class Tick:
 
   def can(self, _):
     return self.tick <= self.wait + 1
+
+  def force(self):
+    self.callback(self.delta)
+    self.reset()
 
   def update(self, delta):
     self.delta += delta

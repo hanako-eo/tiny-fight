@@ -35,7 +35,6 @@ class Troop(Entity):
 
   def update(self, delta):
     self.timer.update(delta)
-    print(self.id, self.life)
     if self.life <= 0:
       self.state.use("dead", self)
 
@@ -54,18 +53,14 @@ class Troop(Entity):
 
     if enemy != None:
       self.state.use("attack", self, enemy)
-      # enemy.state.use("attack", enemy, self)
       return False
 
-    # next_cell = self.scene.plate.get(next_pos)
-    # if next_cell == EMPTY:
-    # elif self.enemy != next_cell.enemy and not next_cell.state.match("dead"):
-    # elif next_cell.state.match("dead") or not next_cell.state.match("attack") and next_cell.timer.can(self.game.delta) and next_cell.move(x + direction, y):
-    #   self.scene.plate.move(next_pos, (x, y))
+    next_cell = self.see(x + direction, y)
 
-    self.scene.plate.move((x + direction, y), (x, y))
-    self.moved = True
-    return True
+    if next_cell == EMPTY or next_cell.state.match("dead") or not next_cell.state.match("attack") and next_cell.timer.can(self.game.delta) and next_cell.move(x + direction, y):
+      self.action_queue(lambda: self.scene.plate.move((x + direction, y), (x, y)))
+      self.moved = True
+      return True
 
   def see(self, x, y):
     if 10 > x > 0:

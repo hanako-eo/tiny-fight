@@ -39,5 +39,8 @@ class Entity(EventBus):
   def update(self, delta: float):
     pass
 
+  def action_queue(self, callback):
+    self.game.queue.append(callback)
+
   def destroy(self):
     self.scene.entities = list(filter(lambda entity: entity != self, self.scene.entities))

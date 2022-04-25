@@ -29,7 +29,7 @@ class Plate:
   def add(self, pos: tuple[int, int], value):
     self.plate[pos[0]][pos[1]] = value
 
-  def remove(self, value: tuple[int, int]):
+  def remove(self, value):
     for x in range(len(self.plate)):
       for y in range(len(self.plate[x])):
         if self.plate[x][y] == value:

@@ -15,8 +15,8 @@ class AttackState(State):
     damage = troop.attack - troop.attack * (enemy.defence / 100)
     enemy.life -= damage + min(damage / 4, 8) * (1 if randint(1, 100) <= 5 else 0)
     troop.life -= enemy.thorns * damage
-    if enemy.life <= 0:
-      troop.state.use("move", troop)
+    if enemy.life <= 0 or enemy.state.match("dead"):
+      troop.action_queue(lambda: troop.state.use("move", troop))
       
 
   def allow_transition(self, order, state):

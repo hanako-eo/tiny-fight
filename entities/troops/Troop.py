@@ -14,7 +14,7 @@ class Troop(Entity):
 
     self.state = TroopMachine(self)
     self.timer = Tick(self.state.current.update, self._speed)
-    self.enemy = x > 7
+    self.is_enemy = x > 7
     self.moved = False
 
     self.max_life = 100
@@ -37,17 +37,18 @@ class Troop(Entity):
     self.timer.update(delta)
     if self.life <= 0:
       self.state.use("dead", self)
+      self.destroy()
 
   def move(self, x, y):
-    direction = -2 * int(self.enemy) + 1
+    direction = -2 * int(self.is_enemy) + 1
     if x+direction < 0 or x+direction >= 10:
       self.state.use("finish", self)
-      return False
+      return True
 
     enemy = None
     for i in range(1, self.watch_range[0]+1):
       future_cell = self.see(x + direction * i, y)
-      if future_cell != EMPTY and self.enemy != future_cell.enemy and not future_cell.state.match("dead"):
+      if future_cell != EMPTY and self.is_enemy != future_cell.is_enemy and not future_cell.state.match("dead"):
         enemy = future_cell
         break
 
@@ -63,14 +64,14 @@ class Troop(Entity):
       return True
 
   def see(self, x, y):
-    if 10 > x > 0:
+    if 10 > x > -1:
       return self.scene.plate.get((x, y))
     return EMPTY
 
 
   def draw(self, x: int, y: int):
     life = self.width * (self.life / self.max_life)
-    if life < 0:
+    if life <= 0:
       return
 
     x = pos(x)
@@ -90,6 +91,4 @@ class Troop(Entity):
   def destroy(self):
     super().destroy()
     self.scene.plate.remove(self)
-    self.state = None
-    self.timer = None
   

@@ -7,8 +7,9 @@ from objects.Timer import *
 from states.machines.TroopMachine import TroopMachine
 
 class Troop(Entity):
-  def __init__(self, scene, x: int, y: int):
+  def __init__(self, scene, card, x: int, y: int):
     super().__init__(scene, "Troop", x, y, 60, 60)
+    self.card = card
     self.color = (0, 200, 0)
     self._speed = 60
 

@@ -1,8 +1,8 @@
 from entities.troops.Troop import Troop
 
 class Knight(Troop):
-  def __init__(self, scene, x, y):
-    super().__init__(scene, x, y)
+  def __init__(self, scene, card, x, y):
+    super().__init__(scene, card, x, y)
     self.color = (0, 119, 182)
     self.max_life = 150
     self.life = 150

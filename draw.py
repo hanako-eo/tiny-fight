@@ -29,8 +29,10 @@ def style(value: dict[str, object]):
   else:
     _style |= value
 
-def text(context: pygame.Surface, x: int, y: int, content: str):
+def text(context: pygame.Surface, x: int, y: int, content: str | bytes | int | float):
   font = pygame.font.SysFont(_style["font"]["family"], _style["font"]["size"])
+  if type(content) == int or type(content) == float:
+    content = content.__str__()
   surf = font.render(content, True, _fill_color)
   surf.set_alpha(_fill_color[3])
   context.blit(surf, (x, y))

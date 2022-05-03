@@ -8,11 +8,13 @@ from entities.troops.Troop import Troop
 
 class TroopCard(Entity):
   deck_index: int
+  quantity: int
   troop: Type[Troop]
 
   def __init__(self, scene, deck_index: int, troop: Type[Troop]):
     super().__init__(scene, "TroopCard", 0, 0, 40, 40)
     self.color = (0, 200, 0)
+    self.quantity = 5
     self.deck_index = deck_index
     self.troop = troop
 
@@ -33,8 +35,8 @@ class TroopCard(Entity):
     self.x = self.deck_index * CELL_SIZE + 100 + (CELL_SIZE - self.width) / 2
     self.y = self.game.screen_height - 100 - CELL_SIZE + (CELL_SIZE - self.height) / 2
 
-    if hover and self.game.mouse.left:
-      self.game.mouse.selection = self.troop
+    if hover and self.game.mouse.left and self.quantity > 0:
+      self.game.mouse.selection = (self.troop, self)
 
   def postoverlay_draw(self):
     draw.fill(self.color)
@@ -44,6 +46,13 @@ class TroopCard(Entity):
       self.y, 
       self.width, 
       self.height
+    )
+    draw.fill((255, 255, 255))
+    draw.text(
+      self.game.context,
+      self.x, 
+      self.y, 
+      self.quantity
     )
     draw.reset()
   

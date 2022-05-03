@@ -1,5 +1,6 @@
 import pygame
 import draw
+from constant import EMPTY
 from objects.Entity import Entity
 
 class Cell(Entity):
@@ -22,14 +23,22 @@ class Cell(Entity):
     self.color = self.default_color
     if self.active and self.collision(self.game.mouse):
       self.color = (0, 255, 0)
-      troop = self.game.mouse.selection
-      if self.game.mouse.left and troop != None:
-        self.plate_scene.plate.add(self.cell_pos, troop(
+      if self.game.mouse.left and self.game.mouse.selection != None:
+        (troop, card) = self.game.mouse.selection
+        cell = self.plate_scene.plate.get(self.cell_pos)
+        
+        if cell != EMPTY:
+          print(cell)
+          cell.card.quantity += 1
+
+        self.plate_scene.plate.set(self.cell_pos, troop(
           self.plate_scene,
+          card,
           self.cell_pos[0],
           self.cell_pos[1]
         ))
         self.game.mouse.selection = None
+        card.quantity -= 1
 
   def draw(self):
     draw.fill(self.color)

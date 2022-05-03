@@ -26,7 +26,7 @@ class Plate:
   def move(self, pos1: tuple[int, int], pos2: tuple[int, int]):
     self.plate[pos1[0]][pos1[1]], self.plate[pos2[0]][pos2[1]] = self.plate[pos2[0]][pos2[1]], self.plate[pos1[0]][pos1[1]]
 
-  def add(self, pos: tuple[int, int], value):
+  def set(self, pos: tuple[int, int], value):
     self.plate[pos[0]][pos[1]] = value
 
   def remove(self, value):

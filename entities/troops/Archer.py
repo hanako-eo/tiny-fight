@@ -1,8 +1,8 @@
 from entities.troops.Troop import Troop
 
 class Archer(Troop):
-  def __init__(self, scene, x, y):
-    super().__init__(scene, x, y)
+  def __init__(self, scene, card, x, y):
+    super().__init__(scene, card, x, y)
     self.color = (135, 89, 26)
     self.max_life = 120
     self.life = 120

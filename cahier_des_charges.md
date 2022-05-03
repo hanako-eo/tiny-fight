@@ -49,27 +49,27 @@ Il y a 2 conditions de victoire :
     - Le joueur possède des sorts activables avec des effets uniques
 
 ### Troupes (La partie VRAIMENT amusante)
-  - Le chevalier:
+  - [x] Le chevalier:
     - Troupe légèrement plus puissante que la moyenne
     - Tiny move: Lance une attaque plus puissante
-  - La valkyrie:
+  - [ ] La valkyrie:
     - Troupe plus faible que la moyenne qui frappe devant et les deux cases côté d'elle
     - Tiny move: Lance une attaque plus puissante
-  - L'archer:
+  - [x] L'archer:
     - Troupe d'attaque à portée de 2 cases ou sur la même colonne
     - Tiny move: flèche coup critique pour tous les ennemis
-  - Le lancier:
+  - [x] Le lancier:
     - Troupe d'attaque à vitesse, PV, et vittesse d'attaque médiocre 
     - Tiny move: La troupe avance plus vite et lance une attaque très puissante sur le premier ennemi rencontré
-  - Le bouclier:
+  - [x] Le bouclier:
     - Troupe de défense avec beaucoup de PV
     - Tiny move: Réduit l'attaque sur un cercle de rayon 2 cases
-  - Nécromancien:
+  - [ ] Nécromancien:
     - Troupe plus faible que la moyenne, invoque des Squelettes devant lui
     - Tiny move: rend les squelettes plus puissants
-  - Squelette:
+  - [x] Squelette:
     - Troupe faible mais attaque à peine plus faible que la moyenne
-  - Hana (healer):
+  - [ ] Hana (healer):
     - Troupe de soin qui guérit sur la même ligne
     - Tiny move: change d'état (soin <==> attaque)
 

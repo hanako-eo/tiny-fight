@@ -38,7 +38,7 @@ class PlateScene(Scene):
       self.state.use("play", self.game)
 
     for _, value in self.plate:
-      if value != EMPTY:
+      if type(value) != int:
         value.update(delta)
 
   def draw(self):
@@ -47,6 +47,6 @@ class PlateScene(Scene):
       
   def postoverlay_draw(self):
     for pos, value in self.plate:
-      if value != EMPTY:
+      if type(value) != int:
         value.draw(pos[0], pos[1])
         value.x = pos[0]

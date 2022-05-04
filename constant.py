@@ -1,4 +1,5 @@
 EMPTY = 0
+RESERVE = 1
 NEXT = 1
 PREV = 2
 CELL_SIZE = 60

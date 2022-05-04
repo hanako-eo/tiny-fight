@@ -1,7 +1,7 @@
 import pygame
 import draw
 from random import randint
-from constant import EMPTY
+from constant import EMPTY, RESERVE
 from functions import pos
 from objects.Entity import Entity
 from objects.Timer import *
@@ -17,6 +17,7 @@ class Troop(Entity):
     self.state = TroopMachine(self)
     self.timer = Tick(self.state.current.update, self._speed)
     self.is_enemy = x > 7
+    self.direction = -2 * int(self.is_enemy) + 1
     self.moved = False
 
     self.max_life = 100
@@ -47,11 +48,11 @@ class Troop(Entity):
       return self.scene.plate.get((x, y))
     return EMPTY
 
-  def search(self, x, y, direction):
+  def search(self, x, y):
     self.enemies = []
     for i in range(1, self.watch_range+1):
-      future_cell = self.see(x + direction * i, y)
-      if future_cell != EMPTY and self.is_enemy != future_cell.is_enemy and not future_cell.state.match("dead"):
+      future_cell = self.see(x + self.direction * i, y)
+      if type(future_cell) != int and self.is_enemy != future_cell.is_enemy and not future_cell.state.match("dead"):
         self.enemies.append(future_cell)
         break
     
@@ -67,23 +68,27 @@ class Troop(Entity):
         self.enemies = list(filter(lambda _enemy: _enemy != enemy, self.enemies))
 
   def move(self, x, y):
-    direction = -2 * int(self.is_enemy) + 1
-    if x+direction < 0 or x+direction >= 10:
+    if x+self.direction < 0 or x+self.direction >= 10:
       self.state.use("finish", self)
       return True
 
-    self.search(x, y, direction)
+    self.search(x, y)
 
     if len(self.enemies) > 0:
       self.state.use("attack", self)
       return False
 
-    next_cell = self.see(x + direction, y)
+    next_cell = self.see(x + self.direction, y)
+    if next_cell == RESERVE:
+      return False
 
-    if next_cell == EMPTY or next_cell.state.match("dead") or not next_cell.state.match("attack") and next_cell.timer.can(self.game.delta) and next_cell.move(x + direction, y):
-      self.action_queue(lambda: self.scene.plate.move((x + direction, y), (x, y)))
+    if next_cell == EMPTY or next_cell.state.match("dead") or not next_cell.state.match("attack") and next_cell.timer.can(self.game.delta) and next_cell.move(x + self.direction, y):
+      self.scene.plate.set((x + self.direction, y), RESERVE)
+      self.action_queue(lambda: self.scene.plate.set((x + self.direction, y), EMPTY))
+      self.action_queue(lambda: self.scene.plate.move((x + self.direction, y), (x, y)))
       self.moved = True
       return True
+    return False
 
   def draw(self, x: int, y: int):
     life = self.width * (self.life / self.max_life)

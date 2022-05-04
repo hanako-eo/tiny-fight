@@ -48,5 +48,6 @@ class PlateScene(Scene):
   def postoverlay_draw(self):
     for pos, value in self.plate:
       if type(value) != int:
-        value.draw(pos[0], pos[1])
+        value.draw()
         value.x = pos[0]
+        value.y = pos[1]

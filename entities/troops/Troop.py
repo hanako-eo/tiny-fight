@@ -1,15 +1,18 @@
 import pygame
 import draw
 from random import randint
-from constant import EMPTY, RESERVE
+from constant import EMPTY, RESERVE, CELL_SIZE
 from functions import pos
-from objects.Entity import Entity
 from objects.Timer import *
+from objects.Entity import Entity
+from objects.Movement import Movement
 from states.machines.TroopMachine import TroopMachine
 
 class Troop(Entity):
   def __init__(self, scene, card, x: int, y: int):
     super().__init__(scene, "Troop", x, y, 60, 60)
+    self.screen_x = pos(x)
+    self.screen_y = pos(y)
     self.card = card
     self.color = (0, 200, 0)
     self._speed = 60
@@ -18,6 +21,7 @@ class Troop(Entity):
     self.timer = Tick(self.state.current.update, self._speed)
     self.is_enemy = x > 7
     self.direction = -2 * int(self.is_enemy) + 1
+    self.movement = Movement(0, self.screen_x, self.direction * CELL_SIZE, 1)
     self.moved = False
 
     self.max_life = 100
@@ -25,6 +29,7 @@ class Troop(Entity):
     self.attack = 20
     self.defence = 20
     self.thorns = 0
+    self.can_move = False
 
     self.watch_range = 1
     self.id = x+y
@@ -36,8 +41,14 @@ class Troop(Entity):
   def set_speed(self, value):
     self._speed = value
     self.timer.set_waiting(value)
+    self.movement.set_duration(value / self.game.get_tick())
 
   def update(self, delta):
+    if self.can_move:
+      self.movement.update(delta)
+
+    self.screen_x = self.movement.get_pos()
+
     self.timer.update(delta)
     if self.life <= 0:
       self.state.use("dead", self)
@@ -87,26 +98,24 @@ class Troop(Entity):
       self.action_queue(lambda: self.scene.plate.set((x + self.direction, y), EMPTY))
       self.action_queue(lambda: self.scene.plate.move((x + self.direction, y), (x, y)))
       self.moved = True
+      self.movement.set_begin(int(self.screen_x))
       return True
     return False
 
-  def draw(self, x: int, y: int):
+  def draw(self):
     life = self.width * (self.life / self.max_life)
     if life <= 0:
       return
 
-    x = pos(x)
-    y = pos(y)
-
     draw.fill(self.color)
-    draw.rect(self.game.context, x, y, self.width, self.height)
+    draw.rect(self.game.context, self.screen_x, self.screen_y, self.width, self.height)
     draw.reset()
     if not self.state.match("wait"):
       draw.fill((255, 0, 0, 0.5))
-      draw.rect(self.game.context, x, y, self.width, 4)
+      draw.rect(self.game.context, self.screen_x, self.screen_y, self.width, 4)
       draw.reset()
       draw.fill((255, 0, 0))
-      draw.rect(self.game.context, x, y, life, 4)
+      draw.rect(self.game.context, self.screen_x, self.screen_y, life, 4)
       draw.reset()
   
   def destroy(self):

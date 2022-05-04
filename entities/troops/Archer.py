@@ -8,6 +8,6 @@ class Archer(Troop):
     self.life = 120
     self.attack = 20
     self.defence = 20
-    self.watch_range = (2, 0)
+    self.watch_range = 2
   def tiny_move():
     pass

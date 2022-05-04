@@ -1,22 +1,16 @@
-from random import randint
 from constant import NEXT, PREV
 from objects.State import State
 
 class AttackState(State):
-  def __init__(self, troop, enemy):
-    super().__init__("attack", (troop, enemy))
+  def __init__(self, troop):
+    super().__init__("attack", troop)
 
   def enter(self):
-    self.value[0].timer.set_callback(self.update)
+    self.value.timer.set_callback(self.update)
     self.update(0)
 
   def update(self, _):
-    (troop, enemy) = self.value
-    damage = troop.attack - troop.attack * (enemy.defence / 100)
-    enemy.life -= damage + min(damage / 4, 8) * (1 if randint(1, 100) <= 5 else 0)
-    troop.life -= enemy.thorns * damage
-    if enemy.life <= 0 or enemy.state.match("dead"):
-      troop.action_queue(lambda: troop.state.use("move", troop))
+    self.value.fight()
       
 
   def allow_transition(self, order, state):

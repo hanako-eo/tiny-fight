@@ -1,5 +1,6 @@
 import pygame
 import draw
+from random import randint
 from constant import EMPTY
 from functions import pos
 from objects.Entity import Entity
@@ -24,8 +25,9 @@ class Troop(Entity):
     self.defence = 20
     self.thorns = 0
 
-    self.watch_range = (1, 0)
+    self.watch_range = 1
     self.id = x+y
+    self.enemies = []
 
   def get_speed(self):
     return self._speed
@@ -40,21 +42,40 @@ class Troop(Entity):
       self.state.use("dead", self)
       self.destroy()
 
+  def see(self, x, y):
+    if 10 > x > -1 and 5 > y > -1:
+      return self.scene.plate.get((x, y))
+    return EMPTY
+
+  def search(self, x, y, direction):
+    self.enemies = []
+    for i in range(1, self.watch_range+1):
+      future_cell = self.see(x + direction * i, y)
+      if future_cell != EMPTY and self.is_enemy != future_cell.is_enemy and not future_cell.state.match("dead"):
+        self.enemies.append(future_cell)
+        break
+    
+  def fight(self):
+    if len(self.enemies) <= 0:
+      self.action_queue(lambda: self.state.use("move", self))
+      
+    for enemy in self.enemies:
+      damage = self.attack - self.attack * (enemy.defence / 100)
+      enemy.life -= damage + min(damage / 4, 8) * (1 if randint(1, 100) <= 5 else 0)
+      self.life -= enemy.thorns * damage
+      if enemy.life <= 0 or enemy.state.match("dead"):
+        self.enemies = list(filter(lambda _enemy: _enemy != enemy, self.enemies))
+
   def move(self, x, y):
     direction = -2 * int(self.is_enemy) + 1
     if x+direction < 0 or x+direction >= 10:
       self.state.use("finish", self)
       return True
 
-    enemy = None
-    for i in range(1, self.watch_range[0]+1):
-      future_cell = self.see(x + direction * i, y)
-      if future_cell != EMPTY and self.is_enemy != future_cell.is_enemy and not future_cell.state.match("dead"):
-        enemy = future_cell
-        break
+    self.search(x, y, direction)
 
-    if enemy != None:
-      self.state.use("attack", self, enemy)
+    if len(self.enemies) > 0:
+      self.state.use("attack", self)
       return False
 
     next_cell = self.see(x + direction, y)
@@ -63,12 +84,6 @@ class Troop(Entity):
       self.action_queue(lambda: self.scene.plate.move((x + direction, y), (x, y)))
       self.moved = True
       return True
-
-  def see(self, x, y):
-    if 10 > x > -1:
-      return self.scene.plate.get((x, y))
-    return EMPTY
-
 
   def draw(self, x: int, y: int):
     life = self.width * (self.life / self.max_life)

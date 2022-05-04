@@ -26,9 +26,8 @@ class Cell(Entity):
       if self.game.mouse.left and self.game.mouse.selection != None:
         (troop, card) = self.game.mouse.selection
         cell = self.plate_scene.plate.get(self.cell_pos)
-        
+
         if cell != EMPTY:
-          print(cell)
           cell.card.quantity += 1
 
         self.plate_scene.plate.set(self.cell_pos, troop(

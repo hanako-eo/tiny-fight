@@ -8,6 +8,7 @@ class FinishState(State):
   def enter(self):
     self.value.timer.set_callback(self.update)
     self.value.destroy()
+    self.value.card.quantity += 1
 
   def update(self, _):
     self.value.destroy()

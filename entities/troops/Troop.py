@@ -1,10 +1,12 @@
 import pygame
 import draw
+from pprint import pp
 from random import randint
 from constant import EMPTY, RESERVE, CELL_SIZE
 from functions import pos
 from objects.Timer import *
 from objects.Entity import Entity
+from objects.Vector import Vector
 from objects.Movement import Movement
 from states.machines.TroopMachine import TroopMachine
 
@@ -79,6 +81,7 @@ class Troop(Entity):
         self.enemies = list(filter(lambda _enemy: _enemy != enemy, self.enemies))
 
   def move(self, x, y):
+    self.can_move = False
     if x+self.direction < 0 or x+self.direction >= 10:
       self.state.use("finish", self)
       return True
@@ -94,10 +97,12 @@ class Troop(Entity):
       return False
 
     if next_cell == EMPTY or next_cell.state.match("dead") or not next_cell.state.match("attack") and next_cell.timer.can(self.game.delta) and next_cell.move(x + self.direction, y):
-      self.scene.plate.set((x + self.direction, y), RESERVE)
-      self.action_queue(lambda: self.scene.plate.set((x + self.direction, y), EMPTY))
+      if next_cell == EMPTY:
+        self.scene.plate.set((x + self.direction, y), RESERVE)
+        self.action_queue(lambda: self.scene.plate.set((x + self.direction, y), EMPTY))
       self.action_queue(lambda: self.scene.plate.move((x + self.direction, y), (x, y)))
       self.moved = True
+      self.can_move = True
       self.movement.set_begin(int(self.screen_x))
       return True
     return False

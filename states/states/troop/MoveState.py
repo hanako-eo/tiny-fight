@@ -13,7 +13,7 @@ class MoveState(State):
 
   def update(self, _):
     if not self.value.moved and self.value.life > 0:
-      self.value.can_move = self.value.move(self.value.x, self.value.y)
+      self.value.move(self.value.x, self.value.y)
     self.value.moved = False
 
   def allow_transition(self, order, state):

@@ -52,7 +52,7 @@ Il y a 2 conditions de victoire :
   - [x] Le chevalier:
     - Troupe légèrement plus puissante que la moyenne
     - Tiny move: Lance une attaque plus puissante
-  - [ ] La valkyrie:
+  - [x] La valkyrie:
     - Troupe plus faible que la moyenne qui frappe devant et les deux cases côté d'elle
     - Tiny move: Lance une attaque plus puissante
   - [x] L'archer:

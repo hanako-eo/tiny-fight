@@ -9,7 +9,7 @@ class Valkyrie(Troop):
     self.color = (65, 99, 253)
     self.max_life = 80
     self.life = 80
-    self.attack = 30
+    self.attack = 25
     self.defence = 20
     self.watch_range = 2
     self.y_search = list(map(lambda x: w_range_y(x)+y, range(0, self.watch_range+1)))
@@ -26,7 +26,7 @@ class Valkyrie(Troop):
       self.action_queue(lambda: self.state.use("move", self))
       
     for enemy in self.enemies:
-      damage = self.attack - self.attack * (enemy.defence / 100)
+      damage = self.attack - self.attack * (enemy.defence / 100) + (len(self.enemies) - 1) * 4.5 + abs(self.y - enemy.y) * 3
       enemy.life -= damage + min(damage / 4, 10) * (1 if randint(1, 100) <= 5 else 0)
       self.life -= enemy.thorns * damage
       if enemy.life <= 0 or enemy.state.match("dead") or enemy.x != self.x + self.direction:

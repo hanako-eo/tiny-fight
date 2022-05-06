@@ -4,9 +4,9 @@ from states.states.round.CooldownState import CooldownState
 from states.states.round.PlayState import PlayState
 
 class RoundMachine(Machine):
-  def __init__(self):
+  def __init__(self, game):
     super().__init__({
       "cooldown": CooldownState,
       "play": PlayState,
       "extra": State
-    }, "cooldown")
+    }, "cooldown", game)

@@ -10,3 +10,8 @@ class PlayState(State):
     for _, entity in self.value.current_scene.plate:
       if entity != EMPTY:
         entity.state.use("move", entity)
+
+  def update(self, _):
+    play_state = self.value.current_scene
+    if play_state.n_units == 0:
+      play_state.state.use("cooldown", self.value)

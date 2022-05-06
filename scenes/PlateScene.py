@@ -20,7 +20,8 @@ class PlateScene(Scene):
 
   def init(self):
     self.game.add_overlay("OverlayScene")
-    self.state = RoundMachine()
+    self.n_units = 0
+    self.state = RoundMachine(self.game)
 
     self.deck = [
       TroopCard(self, 0, Troop),
@@ -34,7 +35,7 @@ class PlateScene(Scene):
 
   def update(self, delta: float):
     self.state.current.update(delta)
-    if self.state.match("cooldown") and self.state.current.value <= 1:
+    if self.state.match("cooldown") and self.state.current.time <= 1:
       self.state.use("play", self.game)
 
     for _, value in self.plate:

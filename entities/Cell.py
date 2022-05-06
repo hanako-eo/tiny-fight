@@ -28,6 +28,7 @@ class Cell(Entity):
         cell = self.plate_scene.plate.get(self.cell_pos)
 
         if cell != EMPTY:
+          self.plate_scene.n_units -= 1
           cell.card.quantity += 1
 
         self.plate_scene.plate.set(self.cell_pos, troop(
@@ -37,6 +38,7 @@ class Cell(Entity):
           self.cell_pos[1]
         ))
         self.game.mouse.selection = None
+        self.plate_scene.n_units += 1
         card.quantity -= 1
 
   def draw(self):

@@ -3,3 +3,6 @@ RESERVE = 1
 NEXT = 1
 PREV = 2
 CELL_SIZE = 60
+
+PORT = 16526
+FORMAT = "utf-8"

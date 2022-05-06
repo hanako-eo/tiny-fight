@@ -1,5 +1,5 @@
 from objects.Scene import Scene
-from entities.Button import Button
+from ui.Button import Button
 
 class MenuScene(Scene):
   def __init__(self, game):

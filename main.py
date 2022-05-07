@@ -3,6 +3,7 @@ from Game import Game
 from scenes.MenuScene import MenuScene
 from scenes.PlateScene import PlateScene
 from scenes.OverlayScene import OverlayScene
+from scenes.LocalRoomScene import LocalRoomScene
 
 pygame.init()
 
@@ -14,6 +15,7 @@ game = Game(
 )
 
 game.add_scene(MenuScene(game))
+game.add_scene(LocalRoomScene(game))
 game.add_scene(PlateScene(game))
 game.add_scene(OverlayScene(game))
 
@@ -30,7 +32,24 @@ while running:
   pygame.display.update()
 
   for event in pygame.event.get():
-    if event.type == pygame.QUIT:
+    if event.type == pygame.KEYDOWN:
+      if event.mod >= 4096: event.mod -= 4096
+
+      if event.mod == pygame.KMOD_NONE:
+        game.keys.append(event)
+      else:
+        game.mods.append(event)
+
+    elif event.type == pygame.KEYUP:
+      if event.mod >= 4096: event.mod -= 4096
+
+      if event.mod == pygame.KMOD_NONE:
+        game.keys = list(filter(lambda key: key.key != event.key, game.keys))
+      else:
+        game.mods = list(filter(lambda key: key.key != event.key, game.mods))
+        
+    elif event.type == pygame.QUIT:
       running = False
+      game.client.close()
       pygame.quit()
       exit(0)

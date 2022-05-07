@@ -1,12 +1,15 @@
 import pygame
 from objects.Mouse import Mouse
 from objects.Scene import Scene
+from objects.networking.Client import Client
 
 class Game:
   tick: int = 60
   scenes: list[Scene] = []
   current_scene: Scene = None
   overlays: list[Scene] = []
+  keys = []
+  mods = []
   
   mouse: Mouse
 
@@ -19,6 +22,7 @@ class Game:
     self.screen_width = width
     self.screen_height = height
 
+    self.client = Client()
     self.change_scene_queue = []
     self.queue = []
     self.mouse = Mouse(self)

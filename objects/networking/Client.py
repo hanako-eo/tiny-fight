@@ -8,7 +8,6 @@ class Client(EventBus):
     self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     self.room_id = 0
     self.id = id(self)
-    self.add_listener("received", print)
 
   def send(self, **kwargs):
     data = f"room={self.room_id}\r\nuser={self.id}\r\n"
@@ -22,17 +21,11 @@ class Client(EventBus):
       chunk = self.client.recv(128)
       message += chunk.decode(FORMAT)
       if len(chunk) < 128:
-        self.emit("received", message)
+        self.emit("received", [message])
         message = ""
 
   def open(self, server):
     self.client.connect((server, PORT))
 
-
-"""
-Room=test\r\n
-User=...\r\n
-Troop=x;y
-Action=move
-Effects=[]
-"""
+  def close(self):
+    self.client.close()

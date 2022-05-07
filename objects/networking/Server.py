@@ -5,8 +5,10 @@ from objects.networking.Worker import Worker
 
 class Server:
     def __init__(self):
-        SERVER = socket.gethostbyname(socket.gethostname())
-        ADDR = (SERVER, PORT)
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        ADDR = (ip, PORT)
         self.closed = False
         self.threads = []
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

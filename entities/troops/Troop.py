@@ -1,6 +1,5 @@
 import pygame
 import draw
-from pprint import pp
 from random import randint
 from constant import EMPTY, RESERVE, CELL_SIZE
 from functions import pos

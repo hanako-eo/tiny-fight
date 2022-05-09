@@ -11,6 +11,7 @@ class Input(Entity):
     self.previous_key = 0
     self.hover = False
     self.focus = False
+    self.frame = 0
     self.time = 0
     self.cursor_pos = 0
 
@@ -23,6 +24,7 @@ class Input(Entity):
       
     if not self.focus:
       self.previous_key = 0
+      self.frame = 0
       return 
 
     key = None
@@ -32,9 +34,11 @@ class Input(Entity):
 
     if key != None and self.previous_key != key.key:
       self.previous_key = key.key
+      self._continue = False
       self.time = 0
 
     if self.time == 0 and key != None:
+      self.frame = 0
       suffix = self.content[:self.cursor_pos]
       prefix = self.content[self.cursor_pos:]
       if key.key == pygame.K_BACKSPACE:
@@ -52,6 +56,7 @@ class Input(Entity):
 
       self.cursor_pos = max(0, min(len(self.content), self.cursor_pos))
 
+    self.frame = (self.frame + 1) % 50
     self.time += 1
     if self.time >= (4 if self._continue else 26) or n_keys == 0:
       self._continue = True
@@ -59,16 +64,24 @@ class Input(Entity):
       if n_keys == 0:
         self._continue = False
         self.previous_key = 0
-
   
   def draw(self):
-    (width, height) = draw.measure_text(self.content)
+    (_, height) = draw.measure_text(self.content)
+    (w, _) = draw.measure_text(self.content[:self.cursor_pos])
     if self.hover:
       draw.fill((205, 0, 0))
     else:
       draw.fill(self.color)
     draw.rect(self.game.context, self.x, self.y, self.width, self.height)
     draw.fill((255, 255, 255))
+    if self.focus and self.frame < 25:
+      draw.rect(
+        self.game.context, 
+        self.x + w + 2, 
+        self.y + self.height / 2 - height / 2, 
+        2, 
+        height
+      )
     draw.text(
       self.game.context, 
       self.x + 4,# + self.width / 2 - width / 2, 

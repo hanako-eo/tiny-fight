@@ -33,20 +33,10 @@ while running:
 
   for event in pygame.event.get():
     if event.type == pygame.KEYDOWN:
-      if event.mod >= 4096: event.mod -= 4096
-
-      if event.mod == pygame.KMOD_NONE:
-        game.keys.append(event)
-      else:
-        game.mods.append(event)
+      game.keys.append(event)
 
     elif event.type == pygame.KEYUP:
-      if event.mod >= 4096: event.mod -= 4096
-
-      if event.mod == pygame.KMOD_NONE:
-        game.keys = list(filter(lambda key: key.key != event.key, game.keys))
-      else:
-        game.mods = list(filter(lambda key: key.key != event.key, game.mods))
+      game.keys = list(filter(lambda key: key.key != event.key, game.keys))
         
     elif event.type == pygame.QUIT:
       running = False

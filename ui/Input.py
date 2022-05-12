@@ -50,6 +50,8 @@ class Input(Entity):
         self.cursor_pos -= 1
       elif key.key == pygame.K_RIGHT:
         self.cursor_pos += 1
+      elif key.key == pygame.K_RETURN:
+        self.emit("submit", [])
       else:
         self.content = suffix + key.unicode + prefix
         self.cursor_pos += 1
